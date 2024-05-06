@@ -2,17 +2,37 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import time
-from arabic_support import support_arabic_text
 
-# Support Arabic text alignment in all components
-support_arabic_text(all=True)
-
+st.markdown("""
+<style>
+body, html {
+    direction: RTL;
+    unicode-bidi: bidi-override;
+    text-align: right;
+}
+p, div, input, label, h1, h2, h3, h4, h5, h6 {
+    direction: RTL;
+    unicode-bidi: bidi-override;
+    text-align: right;
+}
+</style>
+""", unsafe_allow_html=True)
 # Load the CSV file
 df = pd.read_csv('words.csv')
 
 # Set page title and header
-st.markdown("<h1 style='text-align: center; color: yellow;'>⋰Ẍ⋱</h1>", unsafe_allow_html=True)
-st.markdown("<h1 style='text-align: center; color: yellow;'>למידת אדיג'בזה</h1>", unsafe_allow_html=True)
+st.write("""
+    <div style="display: flex; justify-content: center;">
+        <h1 style='color: yellow;'>⋰Ẍ⋱</h1>
+    </div>
+""", unsafe_allow_html=True)
+
+st.write("""
+    <div style="display: flex; justify-content: center;">
+        <h1 style='color: yellow;'>למידת אדיג'בזה</h1>
+    </div>
+""", unsafe_allow_html=True)
+
 st.title("")
 
 # Set target language to Hebrew
