@@ -16,7 +16,7 @@ with st.sidebar:
         st.button(label='SP', key='sp')
 
 # The form changes depending on the language
-with st.form(key='map_properties'):
+with st.form():
     if st.session_state.sp:
         station_choice = stations["Dutch"]
     else:

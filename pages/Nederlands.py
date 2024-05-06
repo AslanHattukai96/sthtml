@@ -6,10 +6,10 @@ import time
 df = pd.read_csv('words.csv')
 
 st.markdown("<h1 style='text-align: center; color: yellow;'>⋰Ẍ⋱</h1>", unsafe_allow_html=True)
-st.markdown("<h1 style='text-align: center; color: yellow;'>Learn Adyghabze</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: yellow;'>Leer Adyghabze</h1>", unsafe_allow_html=True)
 st.title("")
 
-target_language = 'English'  # Set target language to English
+target_language = 'Dutch'  # Set target language to Dutch
 
 # Initialize or update previous language selection
 if 'prev_language' not in st.session_state:
@@ -57,19 +57,19 @@ if 'circassian_word' not in st.session_state or 'correct_translation' not in st.
     st.session_state.next_button_clicked = False
 
 if st.session_state.circassian_word is not None:
-    st.write(f"Translate the following word from Circassian to {target_language}: **{st.session_state.circassian_word}**")
+    st.write(f"Vertaal het volgende woord van Circassian naar het Nederlands: **{st.session_state.circassian_word}**")
 
-    user_translation = st.text_input(f"Your translation in {target_language}:").strip()
+    user_translation = st.text_input(f"Jouw vertaling: ").strip()
     
     # Change button label according to the target language
-    submit_button_label = "Check"  # Change button label to "Check"
+    submit_button_label = "Controleren"  # Change button label to "Controleren"
     
     submit_button = st.button(submit_button_label)
 
     # Check if the user's translation is correct or incorrect, only when submit button is pressed
     if submit_button and user_translation:
         if user_translation.lower() == st.session_state.correct_translation.lower():
-            st.success("Correct translation!")
+            st.success("Juiste vertaling!")
             st.session_state.correct_count += 1  # Increment correct count
             st.session_state.guessed_words.append(st.session_state.circassian_word)  # Add guessed word to list
             set_new_word()  # Set a new word and translation
@@ -86,9 +86,9 @@ if st.session_state.circassian_word is not None:
             time.sleep(3)  # Wait for 3 seconds
             st.experimental_rerun()
         else:
-            st.error(f"Incorrect translation. The correct translation was: **{st.session_state.correct_translation}**")
+            st.error(f"Onjuiste vertaling. De juiste vertaling was: **{st.session_state.correct_translation}**")
 
-    st.write(f"Total Correct Tries: {st.session_state.correct_count}")
+    st.write(f"Totaal aantal juiste pogingen: {st.session_state.correct_count}")
 else:
-    st.write("🎈 You finished!")
+    st.write("🎈 Je bent klaar!")
     st.image("succes.jpeg")
