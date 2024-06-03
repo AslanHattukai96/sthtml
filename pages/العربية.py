@@ -80,7 +80,7 @@ if 'circassian_word' not in st.session_state or 'correct_translation' not in st.
     st.session_state.next_button_clicked = False
 
 if st.session_state.circassian_word is not None:
-    st.write(f"ترجم الكلمة التالية من الأديغابزي إلى اللغة العربية: **{st.session_state.circassian_word}**")
+    st.write(f"ترجم الكلمة التالية من الأديغابزي إلى اللغة العربية: <span dir='rtl'>{st.session_state.circassian_word}</span>")
 
     user_translation = st.text_input(f"ترجمتك: ").strip()
     

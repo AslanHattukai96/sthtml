@@ -3,11 +3,33 @@ import pandas as pd
 import numpy as np
 import time
 
-df = pd.read_csv('words.csv')
-
+# Set page title and header
 st.markdown("<h1 style='text-align: center; color: yellow;'>⋰Ẍ⋱</h1>", unsafe_allow_html=True)
 st.markdown("<h1 style='text-align: center; color: yellow;'>Leer Adyghabze</h1>", unsafe_allow_html=True)
 st.title("")
+
+# Define the CSV files
+csv_files = {
+    "Dieren": "animals.csv",
+    "Woorden": "words.csv",
+    "Basiswerkwoorden": "basic verbs.csv",
+    "Communicatie Werkwoorden": "communication verbs.csv",
+    "Fysieke Activiteiten": "physical activities.csv"
+}
+
+# Add a selectbox to choose the CSV file
+selected_file_key = st.selectbox("Selecteer een bestand", list(csv_files.keys()))
+selected_file_path = csv_files[selected_file_key]
+
+# Store the selected file in session state
+if 'selected_file' not in st.session_state or st.session_state.selected_file != selected_file_path:
+    st.session_state.selected_file = selected_file_path
+    st.session_state.words = pd.read_csv(st.session_state.selected_file)
+    st.session_state.correct_count = 0
+    st.session_state.guessed_words = []
+    st.session_state.next_button_clicked = True
+
+df = st.session_state.words
 
 target_language = 'Dutch'  # Set target language to Dutch
 
@@ -23,20 +45,8 @@ if st.session_state.prev_language != target_language:
     st.session_state.prev_language = target_language
     st.session_state.next_button_clicked = True
 
-# Initialize session state variables if they don't exist
-if 'words' not in st.session_state:
-    st.session_state.words = df
-
 # Filter DataFrame based on the selected target language
 st.session_state.df = pd.DataFrame(st.session_state.words[['Circassian', target_language]])
-
-# Initialize correct count if it doesn't exist
-if 'correct_count' not in st.session_state:
-    st.session_state.correct_count = 0
-
-# Initialize list of guessed words if it doesn't exist
-if 'guessed_words' not in st.session_state:
-    st.session_state.guessed_words = []
 
 # Function to get a random word
 def get_random_word():
@@ -73,13 +83,6 @@ if st.session_state.circassian_word is not None:
             st.session_state.correct_count += 1  # Increment correct count
             st.session_state.guessed_words.append(st.session_state.circassian_word)  # Add guessed word to list
             set_new_word()  # Set a new word and translation
-            # Clear the text input field using JavaScript
-            st.write(
-                "<script>"
-                "document.getElementById('text_input').value = ''"
-                "</script>",
-                unsafe_allow_html=True,
-            )
             st.markdown("![Alt Text](https://media1.tenor.com/m/hiq7FodgfxcAAAAC/caucasian-caucasus.gif)")
 
             # Rerender the page
